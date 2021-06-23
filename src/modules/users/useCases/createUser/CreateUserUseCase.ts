@@ -2,6 +2,8 @@ import { User, UserRole } from '@modules/users/infra/typeorm/entities/User';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 
+import { CreateUserError } from './CreateUserError';
+
 interface IRequest {
   name: string;
   email: string;
@@ -16,17 +18,13 @@ class CreateUserUseCase {
   ) {}
 
   async execute({ email, name, role }: IRequest): Promise<User> {
-    if (!(role in UserRole)) {
-      throw new Error('Invalid role');
-    }
-
-    if (!email) {
-      throw new Error('Invalid email');
-    }
-
     const emailAlreadyExists = await this.usersRepository.findByEmail(email);
     if (emailAlreadyExists) {
-      throw new Error('User already exists');
+      throw new CreateUserError.UserAlreadyExists();
+    }
+
+    if (!(role in UserRole)) {
+      throw new CreateUserError.InvalidRole();
     }
 
     const user = await this.usersRepository.create({
