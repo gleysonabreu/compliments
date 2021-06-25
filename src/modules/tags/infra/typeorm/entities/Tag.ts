@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -20,6 +21,11 @@ class Tag {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Expose({ name: 'nameCustom' })
+  nameCustom(): string {
+    return `#${this.name}`;
+  }
 
   constructor() {
     if (!this.id) {

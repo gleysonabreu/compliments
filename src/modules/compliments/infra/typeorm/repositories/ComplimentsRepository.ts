@@ -11,6 +11,29 @@ class ComplimentsRepository implements IComplimentsRepository {
     this.repository = getRepository(Compliment);
   }
 
+  async listReceiver(userReceiver: string): Promise<Compliment[]> {
+    const compliments = await this.repository.find({
+      where: {
+        userReceiver,
+      },
+
+      relations: ['senderUser', 'receiverUser', 'tag'],
+    });
+
+    return compliments;
+  }
+
+  async listSender(userSender: string): Promise<Compliment[]> {
+    const compliments = await this.repository.find({
+      where: {
+        userSender,
+      },
+      relations: ['senderUser', 'receiverUser', 'tag'],
+    });
+
+    return compliments;
+  }
+
   async create({
     message,
     tagId,

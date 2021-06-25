@@ -1,8 +1,13 @@
 import auth from '@config/auth';
 import jwt, { SignOptions } from 'jsonwebtoken';
 
+interface IJwt {
+  name: string;
+  email: string;
+}
+
 interface ISign {
-  payload: string | object | Buffer;
+  payload: string | IJwt | Buffer;
   subject: string;
 }
 

@@ -40,6 +40,7 @@ class AuthenticateUserUseCase {
     const token = await sign({
       payload: {
         email: user.email,
+        name: user.name,
       },
       subject: user.id,
     });

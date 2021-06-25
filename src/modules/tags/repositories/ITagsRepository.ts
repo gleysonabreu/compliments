@@ -4,6 +4,7 @@ import { Tag } from '../infra/typeorm/entities/Tag';
 interface ITagsRepository {
   findByName(name: string): Promise<Tag | undefined>;
   create(tag: ICreateTagDTO): Promise<Tag>;
+  findAll(): Promise<Tag[]>;
 }
 
 export { ITagsRepository };

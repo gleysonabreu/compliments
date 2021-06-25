@@ -9,8 +9,9 @@ class CreateComplimentController {
       message,
       tag_id: tagId,
       user_receiver: userReceiver,
-      user_sender: userSender,
     } = request.body;
+
+    const { id: userSender } = request.user;
 
     const createComplimentUseCase = container.resolve(CreateComplimentUseCase);
     const compliment = await createComplimentUseCase.execute({
