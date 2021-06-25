@@ -12,4 +12,10 @@ export namespace CreateComplimentError {
       super("User's receiver and sender are the same");
     }
   }
+
+  export class TagNotExists extends ApiError {
+    constructor() {
+      super('Tag does not exists!');
+    }
+  }
 }

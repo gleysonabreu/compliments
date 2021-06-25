@@ -41,6 +41,10 @@ class CreateComplimentUseCase {
       throw new CreateComplimentError.UserReceiver();
     }
 
+    const tagExists = await this.tagsRepository.findTagById(tagId);
+    if (!tagExists) {
+      throw new CreateComplimentError.TagNotExists();
+    }
     const compliment = await this.compliments.create({
       userSender,
       userReceiver,
